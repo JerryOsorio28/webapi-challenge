@@ -4,8 +4,9 @@ const express = require('express');
 //Run our server under the express depencency
 const server = express();
 
-//Teaches express to parse JSON
+//Teaches express to parse the content of the body to JSON
 server.use(express.json()) 
+
 //add your middleware used globally here
 server.use(logger)
 

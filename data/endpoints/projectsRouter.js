@@ -9,10 +9,11 @@ const router = express.Router();
 
 //<------------------------------------------------------------------------- GET REQUESTS ----------------
 //Returns an array of all the projects objects contained in the database.
-router.get('/', (req, res) => {
+router.get('/projects', (req, res) => {
     projectsDb.get()
         .then(projects => res.status(200).json(projects))
         .catch(err => {
+            console.log(err)
             res.status(500).json({
                 error: "Unable to fetch projects",
                 err: err
