@@ -10,11 +10,11 @@ server.use(express.json())
 //add your middleware used globally here
 server.use(logger)
 
-// const projectsRouter = require('./data/endpoints/projectsRouter');
-// server.use('/projects', projectsRouter);
+const projectsRouter = require('./data/endpoints/projectsRouter');
+server.use('/api/projects', projectsRouter);
 
 server.get('/', (req, res) => {
-  res.send(`<h2>It's up and working!</h2>`)
+  res.send(`<h2>Server is working!</h2>`)
 });
 
 //custom middleware that logs to the console the request method, request url, and a timestamp it ws requested.
