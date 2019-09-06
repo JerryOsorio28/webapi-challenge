@@ -10,8 +10,13 @@ server.use(express.json())
 //add your middleware used globally here
 server.use(logger)
 
+//Adding projects Router
 const projectsRouter = require('./data/endpoints/projectsRouter');
 server.use('/api/projects', projectsRouter);
+
+//Adding actions Router
+const actionsRouter = require('./data/endpoints/actionsRouter');
+server.use('/api/projects', actionsRouter);
 
 server.get('/', (req, res) => {
   res.send(`<h2>Server is working!</h2>`)
