@@ -7,6 +7,7 @@ const router = express.Router();
 const ActionsDb = require('../helpers/actionModel');
 //importing projects database
 const ProjectsDb = require('../helpers/projectModel');
+
 //<------------------------------------------------------------------------- GET REQUESTS ----------------
 //Returns an array of all the projects objects contained in the database.
 router.get('/:id/actions', (req, res) => {
@@ -14,6 +15,7 @@ router.get('/:id/actions', (req, res) => {
     const { id }  = req.params;
 
     ProjectsDb.getProjectActions(id)
+    // ActionsDb.get(id)
         .then(actions => res.status(200).json(actions))
         .catch(err => {
             console.log(err)
@@ -24,7 +26,7 @@ router.get('/:id/actions', (req, res) => {
         })
 })
 //<------------------------------------------------------------------------- POST REQUESTS ----------------
-router.post('/:id', (req, res) => {
+router.post('/:id/actions', (req, res) => {
 
     const { action } = req.body;
 
@@ -39,7 +41,7 @@ router.post('/:id', (req, res) => {
         })
 })
 //<------------------------------------------------------------------------- PUT REQUESTS ----------------
-router.put('/:id', (req, res) => {
+router.put('/:id/actions', (req, res) => {
 
     const { id } = req.params;
     const update = req.body;
@@ -55,7 +57,7 @@ router.put('/:id', (req, res) => {
         })
 })
 //<------------------------------------------------------------------------- DELETE REQUESTS ----------------
-router.delete('/:id', (req, res) => {
+router.delete('/:id/actions', (req, res) => {
 
     const { id } = req.params;
 
