@@ -10,12 +10,12 @@ const ProjectsDb = require('../helpers/projectModel');
 
 //<------------------------------------------------------------------------- GET REQUESTS ----------------
 //Returns an array of all the projects objects contained in the database.
-router.get('/:id/actions', (req, res) => {
+router.get('/:id', (req, res) => {
 
     const { id }  = req.params;
-
-    ProjectsDb.getProjectActions(id)
-    // ActionsDb.get(id)
+    console.log(id)
+    // ProjectsDb.getProjectActions(id)
+    ActionsDb.get(id)
         .then(actions => res.status(200).json(actions))
         .catch(err => {
             console.log(err)
@@ -26,9 +26,9 @@ router.get('/:id/actions', (req, res) => {
         })
 })
 //<------------------------------------------------------------------------- POST REQUESTS ----------------
-router.post('/:id/actions', (req, res) => {
+router.post('/', (req, res) => {
 
-    const { action } = req.body;
+    const action = req.body;
 
     ActionsDb.insert(action)
         .then(action => res.status(201).json(action))
@@ -41,7 +41,7 @@ router.post('/:id/actions', (req, res) => {
         })
 })
 //<------------------------------------------------------------------------- PUT REQUESTS ----------------
-router.put('/:id/actions', (req, res) => {
+router.put('/:id', (req, res) => {
 
     const { id } = req.params;
     const update = req.body;
@@ -57,18 +57,33 @@ router.put('/:id/actions', (req, res) => {
         })
 })
 //<------------------------------------------------------------------------- DELETE REQUESTS ----------------
-router.delete('/:id/actions', (req, res) => {
+router.delete('/:id', (req, res) => {
 
     const { id } = req.params;
 
-    ActionsDb.remove(id)
-        .then(removed => res.status(204).end({
-            message: "action deleted sucessfully"
-        }))
+    ActionsDb.get(id)
+        .then(banana => {
+            if(!banana){
+                res.status(404).json({
+                    message: "Item does not exist"
+                })
+            }else{
+            ActionsDb.remove(id)    
+                .then(action => res.status(204).json({
+                message: "action deleted sucessfully",
+                action: action
+                }))
+                .catch(err => {
+                    res.status(500).json({
+                        error: "Unable to delete action"
+                    })
+                })
+            }
+        })
         .catch(err => {
             console.log(err)
             res.status(500).json({
-                error: "Unable to delete action",
+                error: "Internal error",
                 err: err
             })
         })
